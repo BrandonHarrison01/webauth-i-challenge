@@ -2,6 +2,7 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 
 const Users = require('./auth-model')
+const restricted = require('./restricted-middleware')
 
 const router = express.Router()
 
@@ -30,10 +31,10 @@ router.post('/login', (req, res) => {
             }
         })
         .catch(error => {res.status(500).json(error)})
-})
+    })
 
 
-router.get('/', (req, res) => {
+router.get('/users', restricted, (req, res) => {
     Users.find()
     .then(result => res.status(200).json(result))
     .catch(error => res.status(500).json(error))
