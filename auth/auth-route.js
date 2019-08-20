@@ -25,7 +25,8 @@ router.post('/login', (req, res) => {
         .first()
         .then(user => {
             if (user && bcrypt.compare(password, user.password)) {
-                res.status(200).json({ message: `Hello ${username}`})
+                req.session.username = user.username
+                res.status(201).json({ message: `Hello ${username}`})
             } else {
                 res.status(401).json({ error: 'Invalid Credentials' })
             }

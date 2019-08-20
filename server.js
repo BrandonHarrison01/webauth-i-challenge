@@ -1,9 +1,11 @@
 const express = require('express')
 const session = require('express-session')
-
-const server = express()
+const KnexSessionStore = require('connect-session-knex')(session)
 
 const AuthRouter = require('./auth/auth-route')
+const knexConnection = require('./data/db-config')
+
+const server = express()
 
 const sessionOptions = {
     name: 'sessionname',
